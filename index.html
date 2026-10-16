@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MartInfo – Peça seu software</title>
+<!-- Importando as fontes do Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #020617;      /* Azul noturno muito profundo */
+  --card: #0f172a;    /* Caixas em azul marinho */
+  --tx: #f8fafc;      /* Texto branco gelo */
+  --mu: #94a3b8;      /* Texto secundário */
+  --bd: #1e293b;      /* Bordas */
+  --pr: #3b82f6;      /* Azul Vivo (Principal) */
+  --pr2: #06b6d4;     /* Ciano (Secundária) */
+  --hint: #172554;    /* Fundo da dica azul escuro */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  /* Fonte principal Inter para melhor leitura em telas */
+  font: 16px/1.55 'Inter', system-ui, -apple-system, sans-serif;
+}
+header {
+  padding: 56px 20px 64px;
+  text-align: center;
+  background: radial-gradient(circle at top, #1e293b 0%, #0b1121 100%);
+  border-bottom: 1px solid var(--bd);
+}
+header h1 {
+  margin: 0 0 12px;
+  font-family: 'Outfit', sans-serif; /* Fonte Tech/Moderna para o título */
+  font-size: clamp(32px, 6vw, 48px);
+  letter-spacing: -1px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--pr), var(--pr2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+header p {
+  margin: 0 auto;
+  max-width: 560px;
+  color: var(--mu);
+  font-size: 17px;
+}
+main { max-width: 760px; margin: -32px auto 40px; padding: 0 16px; }
+section {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+h2 { 
+  margin: 0 0 6px; 
+  font-family: 'Outfit', sans-serif; /* Fonte Tech para os cabeçalhos de seção */
+  font-size: 20px; 
+  display: flex; 
+  align-items: center; 
+}
+h2 span {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  border-radius: 6px;
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--pr);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+}
+.sub { margin: 0 0 16px; color: var(--mu); font-size: 14px; }
+label.f { display: block; font-weight: 600; margin: 16px 0 8px; font-size: 14px; color: #e2e8f0; }
+input[type=text], input[type=tel], textarea, select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  background: #0f172a;
+  color: var(--tx);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+textarea { min-height: 100px; resize: vertical; }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--pr);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+input::placeholder, textarea::placeholder { color: #475569; }
+.opts { display: flex; flex-wrap: wrap; gap: 10px; }
+.opts label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  background: #0f172a;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.opts label:hover { border-color: var(--mu); }
+.opts label:has(input:checked) {
+  border-color: var(--pr);
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--pr);
+  font-weight: 600;
+}
+.opts input { accent-color: var(--pr); }
+.hint {
+  background: rgba(99, 102, 241, 0.1);
+  border-left: 4px solid var(--pr2);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  color: #cbd5e1;
+  margin: 12px 0;
+}
+.hint b { color: var(--pr2); font-weight: 600; }
+.colors { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 10px; }
+.colors input[type=color] {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 2px;
+  background: #0f172a;
+  cursor: pointer;
+}
+.hide { display: none; }
+button.send {
+  width: 100%;
+  padding: 18px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  transition: transform 0.1s, filter 0.2s;
+}
+button.send:hover { filter: brightness(1.1); transform: translateY(-1px); }
+button.send:active { transform: translateY(1px); }
+button.alt {
+  margin-top: 12px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--mu);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+button.alt:hover { color: var(--tx); border-color: var(--mu); }
+.err { color: #f43f5e; font-size: 14px; margin: 12px 0 0; min-height: 20px; text-align: center; font-weight: 500; }
+footer { text-align: center; color: var(--mu); font-size: 13px; padding: 0 16px 40px; }
+</style>
+</head>
+<body>
+<header>
+<h1>MartInfo</h1>
+<p>Conte sua ideia e a gente transforma em software. Preencha o formulário e receba o retorno direto no WhatsApp.</p>
+</header>
+<main>
+<section>
+<h2><span>1</span>Quem é você?</h2>
+<label class="f" for="nome">Seu nome *</label>
+<input type="text" id="nome" placeholder="Como podemos te chamar?">
+<label class="f" for="contato">Seu WhatsApp ou e-mail (opcional)</label>
+<input type="text" id="contato" placeholder="Para retornarmos o contato">
+</section>
+
+<section>
+<h2><span>2</span>O problema real</h2>
+<p class="sub">Descreva a dor ou a dificuldade que você quer resolver. Não precisa falar de tecnologia.</p>
+<textarea id="problema" placeholder="Ex.: Perco muito tempo anotando pedidos no caderno e esqueço entregas."></textarea>
+</section>
+
+<section>
+<h2><span>3</span>Tipo e uso</h2>
+<label class="f">O que você precisa? *</label>
+<div class="opts" id="tipo">
+<label><input type="radio" name="tipo" value="Site"> Site</label>
+<label><input type="radio" name="tipo" value="Software (computador)"> Software (computador)</label>
+<label><input type="radio" name="tipo" value="App (celular)"> App (celular)</label>
+<label><input type="radio" name="tipo" value="Webapp (sistema online)"> Webapp (sistema online)</label>
+<label><input type="radio" name="tipo" value="Não sei, preciso de ajuda"> Não sei</label>
+</div>
+<label class="f">Será para uso… *</label>
+<div class="opts" id="uso">
+<label><input type="radio" name="uso" value="Próprio"> Próprio</label>
+<label><input type="radio" name="uso" value="Negócio"> Negócio</label>
+<label><input type="radio" name="uso" value="Grupo/Comunidade"> Grupo/Comunidade</label>
+<label><input type="radio" name="uso" value="Trabalho/Empresa onde atuo"> Trabalho</label>
+</div>
+
+<!-- Caixas dinâmicas de explicação de uso -->
+<div id="negBox" class="hide">
+<label class="f" for="negocio">Tipo de negócio</label>
+<select id="negocio">
+<option value="">Selecione…</option>
+<option>Comércio / Loja</option><option>Restaurante / Lanchonete / Delivery</option><option>Salão / Barbearia / Estética</option><option>Saúde / Clínica / Consultório</option><option>Educação / Cursos</option><option>Oficina / Serviços técnicos</option><option>Advocacia / Contabilidade</option><option>Construção / Imobiliária</option><option>Indústria / Logística</option><option>Agro</option><option>ONG / Igreja / Associação</option><option>Outro (digitar abaixo)</option>
+</select>
+<input type="text" id="negocioOutro" placeholder="Outro tipo de negócio (se quiser detalhar)" style="margin-top:8px">
+</div>
+
+<div id="grupoBox" class="hide">
+<label class="f" for="grupoEsp">Qual o tipo de grupo ou comunidade?</label>
+<input type="text" id="grupoEsp" placeholder="Ex.: Igreja, clã de jogo, associação de moradores, equipe esportiva...">
+</div>
+
+<div id="trabBox" class="hide">
+<label class="f" for="trabEsp">Descreva o seu local de trabalho/empresa</label>
+<input type="text" id="trabEsp" placeholder="Ex.: Agência de marketing, escritório de contabilidade, prefeitura...">
+</div>
+</section>
+
+<section>
+<h2><span>4</span>Público e visual</h2>
+<label class="f" for="publico">Público-alvo</label>
+<input type="text" id="publico" placeholder="Quem vai usar? Ex.: clientes da minha loja, alunos, funcionários…">
+<label class="f" for="cores">Cores desejadas</label>
+<input type="text" id="cores" placeholder="Ex.: azul e branco, ou “tons de verde”">
+<div class="colors"><span class="sub" style="margin:0">Ou escolha:</span>
+<input type="color" id="c1" value="#0ea5e9"><input type="color" id="c2" value="#6366f1">
+<label style="font-size:14px"><input type="checkbox" id="usaCor"> usar estas cores</label></div>
+</section>
+
+<section>
+<h2><span>5</span>Requisitos (RF e RNF)</h2>
+<p class="sub">Calma, é mais simples do que parece!</p>
+<div class="hint"><b>RF – Requisitos Funcionais:</b> o que o sistema <b>faz</b>. Ex.: “cadastrar clientes”, “emitir relatório de vendas”, “enviar lembrete por WhatsApp”, “fazer login”.</div>
+<textarea id="rf" placeholder="Liste o que o sistema precisa fazer, uma coisa por linha."></textarea>
+<div class="hint"><b>RNF – Requisitos Não Funcionais:</b> <b>como</b> o sistema deve ser. Ex.: “rápido”, “funcionar no celular”, “seguro, com senha”, “fácil para idosos usarem”, “funcionar sem internet”.</div>
+<textarea id="rnf" placeholder="Descreva as qualidades que espera: velocidade, segurança, facilidade de uso…"></textarea>
+</section>
+
+<section>
+<h2><span>6</span>Orçamento e prazo</h2>
+<label class="f" for="orc">Orçamento disponível</label>
+<select id="orc"><option value="">Selecione…</option><option>Até R$ 500</option><option>R$ 500 a R$ 1.500</option><option>R$ 1.500 a R$ 3.000</option><option>R$ 3.000 a R$ 7.000</option><option>Acima de R$ 7.000</option><option>Ainda não sei / quero um orçamento</option></select>
+<label class="f" for="prazo">Prazo desejado</label>
+<select id="prazo"><option value="">Selecione…</option><option>Urgente (até 1 semana)</option><option>Até 2 semanas</option><option>Até 1 mês</option><option>1 a 3 meses</option><option>Sem pressa</option></select>
+</section>
+
+<section>
+<h2><span>7</span>Referências e concorrentes</h2>
+<p class="sub">Conhece algo parecido? Cole links ou nomes de sites/apps que você gosta (ou que já competem com você).</p>
+<textarea id="refs" placeholder="Ex.: iFood, Trello, www.exemplo.com.br…"></textarea>
+</section>
+
+<section>
+<h2><span>8</span>Integrações externas</h2>
+<p class="sub">O sistema precisa conversar com algum serviço?</p>
+<div class="opts" id="integ">
+<label><input type="checkbox" value="WhatsApp"> WhatsApp</label>
+<label><input type="checkbox" value="Pagamentos (Pix/Cartão)"> Pagamentos (Pix/Cartão)</label>
+<label><input type="checkbox" value="E-mail"> E-mail</label>
+<label><input type="checkbox" value="Google (Agenda/Planilhas/Login)"> Google</label>
+<label><input type="checkbox" value="Redes sociais"> Redes sociais</label>
+<label><input type="checkbox" value="Mapas / Entregas"> Mapas / Entregas</label>
+<label><input type="checkbox" value="Nota fiscal"> Nota fiscal</label>
+<label><input type="checkbox" value="Outro sistema que já uso"> Outro sistema</label>
+</div>
+<input type="text" id="integOutro" placeholder="Outras integrações (opcional)" style="margin-top:10px">
+</section>
+
+<section>
+<h2><span>9</span>Hospedagem e manutenção</h2>
+<label class="f">Você já possui…</label>
+<div class="opts" id="host">
+<label><input type="radio" name="host" value="Já tenho domínio e hospedagem"> Domínio e hospedagem</label>
+<label><input type="radio" name="host" value="Só tenho domínio"> Só domínio</label>
+<label><input type="radio" name="host" value="Só tenho hospedagem"> Só hospedagem</label>
+<label><input type="radio" name="host" value="Não tenho nada, preciso de ajuda"> Nada ainda</label>
+</div>
+<label class="f">Manutenção após a entrega</label>
+<div class="opts" id="manut">
+<label><input type="radio" name="manut" value="Quero manutenção mensal"> Quero mensal</label>
+<label><input type="radio" name="manut" value="Só quando precisar"> Só quando precisar</label>
+<label><input type="radio" name="manut" value="Não sei"> Não sei</label>
+</div>
+</section>
+
+<button class="send" id="enviar">Enviar pedido pelo WhatsApp</button>
+<button class="alt" id="copiar">Copiar resumo do pedido</button>
+<p class="err" id="err" role="alert"></p>
+</main>
+<footer>© MartInfo · Seu pedido será aberto no WhatsApp para você conferir e enviar.</footer>
+
+<script>
+const WA="5591985603676";
+const $=id=>document.getElementById(id);
+const radio=n=>{const e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:""};
+
+// Controle dinâmico das caixas de "Uso"
+document.querySelectorAll('input[name="uso"]').forEach(r=>r.addEventListener('change',()=>{
+  const val = radio('uso');
+  $('negBox').classList.toggle('hide', val !== 'Negócio');
+  $('grupoBox').classList.toggle('hide', val !== 'Grupo/Comunidade');
+  $('trabBox').classList.toggle('hide', val !== 'Trabalho/Empresa onde atuo');
+}));
+
+function montar(){
+  const L=[];
+  const add=(t,v)=>{if(v&&String(v).trim())L.push("*"+t+":* "+String(v).trim())};
+  L.push("*📩 NOVO PEDIDO – MartInfo*","");
+  add("Nome",$('nome').value);
+  add("Contato",$('contato').value);
+  add("Problema a resolver",$('problema').value);
+  add("Tipo",radio('tipo'));
+  add("Uso",radio('uso'));
+  
+  // Coletando detalhes de uso baseados na escolha
+  if(radio('uso')==='Negócio'){
+    const n=[$('negocio').value,$('negocioOutro').value].filter(Boolean).join(" – ");
+    add("Detalhes do Negócio",n);
+  } else if (radio('uso')==='Grupo/Comunidade') {
+    add("Detalhes do Grupo/Comunidade", $('grupoEsp').value);
+  } else if (radio('uso')==='Trabalho/Empresa onde atuo') {
+    add("Detalhes do Trabalho", $('trabEsp').value);
+  }
+
+  add("Público-alvo",$('publico').value);
+  let cores=$('cores').value.trim();
+  if($('usaCor').checked)cores=(cores?cores+" | ":"")+"Paleta: "+$('c1').value+" e "+$('c2').value;
+  add("Cores",cores);
+  add("Requisitos funcionais (RF)",$('rf').value);
+  add("Requisitos não funcionais (RNF)",$('rnf').value);
+  add("Orçamento",$('orc').value);
+  add("Prazo",$('prazo').value);
+  add("Referências/Concorrentes",$('refs').value);
+  const ints=[...document.querySelectorAll('#integ input:checked')].map(i=>i.value);
+  if($('integOutro').value.trim())ints.push($('integOutro').value.trim());
+  add("Integrações",ints.join(", "));
+  add("Hospedagem/Domínio",radio('host'));
+  add("Manutenção",radio('manut'));
+  return L.join("\n");
+}
+
+function validar(){
+  const falta=[];
+  if(!$('nome').value.trim())falta.push("seu nome");
+  if(!$('problema').value.trim())falta.push("o problema a resolver");
+  if(!radio('tipo'))falta.push("o tipo de projeto");
+  if(!radio('uso'))falta.push("o tipo de uso");
+  
+  $('err').textContent=falta.length?"Faltou preencher: "+falta.join(", ")+".":"";
+  return !falta.length;
+}
+
+$('enviar').onclick=()=>{
+  if(!validar())return;
+  const url="https://wa.me/"+WA+"?text="+encodeURIComponent(montar());
+  const w=window.open(url,"_blank","noopener");
+  if(!w)location.href=url;
+};
+
+$('copiar').onclick=async()=>{
+  if(!validar())return;
+  try{await navigator.clipboard.writeText(montar());$('err').style.color="#10b981";$('err').textContent="Resumo copiado!";}
+  catch(e){$('err').style.color="#f43f5e";$('err').textContent="Não foi possível copiar automaticamente.";}
+  setTimeout(()=>{$('err').style.color="";$('err').textContent=""},3000);
+};
+</script>
+</body>
+</html>
