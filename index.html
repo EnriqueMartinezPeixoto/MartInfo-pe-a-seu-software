@@ -10,6 +10,7 @@
 <style>
 :root{--bg:#020617;--card:#0f172a;--tx:#f8fafc;--mu:#94a3b8;--bd:#1e293b;--pr:#3b82f6;--pr2:#06b6d4;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 'Inter',system-ui,-apple-system,sans-serif;padding-bottom:96px}
 header{padding:56px 20px 64px;text-align:center;background:radial-gradient(circle at top,#1e293b 0%,#0b1121 100%);border-bottom:1px solid var(--bd)}
 header h1{margin:0 0 12px;font-family:'Outfit',sans-serif;font-size:clamp(32px,6vw,48px);letter-spacing:-1px;font-weight:800;background:linear-gradient(135deg,var(--pr),var(--pr2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
@@ -20,6 +21,22 @@ h2{margin:0 0 6px;font-family:'Outfit',sans-serif;font-size:20px;display:flex;al
 h2 span{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:10px;border-radius:6px;background:rgba(59,130,246,.12);color:var(--pr);border:1px solid rgba(59,130,246,.3);font-size:14px;font-family:'Inter',sans-serif;font-weight:700}
 h3{margin:20px 0 8px;font-size:14px;color:var(--pr2);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .sub{margin:0 0 16px;color:var(--mu);font-size:14px}
+
+/* Vitrine de Projetos e Botão CTA */
+.grid-proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:16px}
+.proj-card{display:flex;flex-direction:column;justify-content:space-between;background:#0b1121;border:1px solid var(--bd);border-radius:12px;padding:18px;text-decoration:none;color:var(--tx);transition:all .2s}
+.proj-card:hover{border-color:var(--pr);transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,.15)}
+.proj-tag{display:inline-block;width:fit-content;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:999px;background:rgba(6,182,212,.12);color:var(--pr2);margin-bottom:10px}
+.proj-card strong{font-family:'Outfit',sans-serif;font-size:18px;display:block;margin-bottom:6px;color:#f8fafc}
+.proj-card p{margin:0 0 14px;font-size:14px;color:var(--mu);line-height:1.45}
+.proj-link{font-size:13px;font-weight:600;color:var(--pr);display:inline-flex;align-items:center;gap:4px}
+.cta-wrap{text-align:center;margin:28px 0 36px}
+.btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 32px;border-radius:14px;background:linear-gradient(135deg,var(--pr),var(--pr2));color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;text-decoration:none;box-shadow:0 6px 20px rgba(59,130,246,.35);transition:all .2s}
+.btn-cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.pedido-header{text-align:center;margin:12px 0 24px;padding-top:16px;border-top:1px solid var(--bd)}
+.pedido-header h2{justify-content:center;font-size:26px;color:#f8fafc}
+.pedido-header p{margin:4px 0 0;color:var(--mu);font-size:15px}
+
 label.f{display:block;font-weight:600;margin:16px 0 8px;font-size:14px;color:#e2e8f0}
 input[type=text],textarea,select{width:100%;padding:14px 16px;border:1px solid var(--bd);border-radius:10px;background:#0f172a;color:var(--tx);font-family:'Inter',sans-serif;font-size:15px}
 textarea{min-height:90px;resize:vertical}
@@ -61,9 +78,28 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
 <body>
 <header>
 <h1>MartInfo</h1>
-<p>Monte seu software como quem escolhe itens de um cardápio, veja o valor estimado na hora e envie tudo direto para o WhatsApp.</p>
+<p>Conheça alguns projetos já desenvolvidos e monte o seu software como quem escolhe itens de um cardápio, vendo o valor estimado na hora.</p>
 </header>
+
 <main>
+<!-- VITRINE DE PROJETOS -->
+<section id="projetos">
+<h2><span>★</span>Projetos em destaque</h2>
+<p class="sub">Clique em qualquer projeto abaixo para testar e ver na prática o que podemos construir para você.</p>
+<div class="grid-proj" id="listaProjetos"></div>
+</section>
+
+<!-- BOTÃO DE AÇÃO PARA IR AO PEDIDO -->
+<div class="cta-wrap">
+<a href="#faca-seu-pedido" class="btn-cta">Faça o seu pedido ↓</a>
+</div>
+
+<!-- DIVISOR DA SEÇÃO DE PEDIDO -->
+<div class="pedido-header" id="faca-seu-pedido">
+<h2>Faça o seu pedido</h2>
+<p>Preencha as etapas abaixo para calcular a estimativa e enviar pelo WhatsApp</p>
+</div>
+
 <section>
 <h2><span>1</span>Quem é você?</h2>
 <label class="f" for="nome">Seu nome *</label>
@@ -170,6 +206,28 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
 </div></div>
 
 <script>
+/* ====== SEUS PROJETOS ====== */
+const PROJETOS = [
+  {
+    tag: "Catálogo & Loja",
+    titulo: "Vitrine Digital",
+    desc: "Vitrine online moderna para exibir produtos, ofertas e destaques da sua loja com envio direto para o WhatsApp.",
+    url: "https://vitrinemartinfo.vercel.app/"
+  },
+  {
+    tag: "Agendamento",
+    titulo: "Agenda Online",
+    desc: "Sistema prático para marcação de horários, controle de disponibilidade e organização de atendimentos.",
+    url: "https://agenda-online-cyan-nu.vercel.app/"
+  },
+  {
+    tag: "Gestão & CRM",
+    titulo: "Cadastro de Clientes",
+    desc: "Plataforma rápida para registrar, consultar e organizar informações e histórico de clientes.",
+    url: "https://cadastro-clientes-ashy.vercel.app/"
+  }
+];
+
 /* ====== TABELA DE PREÇOS (edite aqui) ====== */
 const TIPOS=[["Site",400],["Software (computador)",1500],["App (celular)",1800],["Webapp (sistema online)",1200],["Não sei, preciso de ajuda",500]];
 const FEATS=[
@@ -187,6 +245,19 @@ const MANUT=[["Quero manutenção mensal",80],["Só quando precisar",0],["Não s
 /* ============================================ */
 const WA="5591985603676";
 const $=id=>document.getElementById(id);
+
+/* Renderiza os projetos */
+$('listaProjetos').innerHTML = PROJETOS.map(p => `
+  <a class="proj-card" href="${p.url}" target="_blank" rel="noopener noreferrer">
+    <div>
+      <span class="proj-tag">${p.tag}</span>
+      <strong>${p.titulo}</strong>
+      <p>${p.desc}</p>
+    </div>
+    <span class="proj-link">Ver projeto ao vivo ↗</span>
+  </a>
+`).join('');
+
 const R=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
 const radio=n=>{const e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:""};
 const checks=(sel)=>[...document.querySelectorAll(sel+' input:checked')];
