@@ -11,7 +11,7 @@
 :root{--bg:#020617;--card:#0f172a;--tx:#f8fafc;--mu:#94a3b8;--bd:#1e293b;--pr:#3b82f6;--pr2:#06b6d4;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 'Inter',system-ui,-apple-system,sans-serif;padding-bottom:96px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 'Inter',system-ui,-apple-system,sans-serif;padding-bottom:40px}
 header{padding:56px 20px 64px;text-align:center;background:radial-gradient(circle at top,#1e293b 0%,#0b1121 100%);border-bottom:1px solid var(--bd)}
 header h1{margin:0 0 12px;font-family:'Outfit',sans-serif;font-size:clamp(32px,6vw,48px);letter-spacing:-1px;font-weight:800;background:linear-gradient(135deg,var(--pr),var(--pr2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 header p{margin:0 auto;max-width:560px;color:var(--mu);font-size:17px}
@@ -47,9 +47,7 @@ input::placeholder,textarea::placeholder{color:#475569}
 .opts label:hover{border-color:var(--mu)}
 .opts label:has(input:checked){border-color:var(--pr);background:rgba(59,130,246,.12);color:var(--pr);font-weight:600}
 .opts input{accent-color:var(--pr)}
-.opts label small{color:var(--mu);font-size:12px;font-weight:500}
-.opts label:has(input:checked) small{color:var(--pr2)}
-.hint{background:rgba(6,182,212,.08);border-left:4px solid var(--pr2);padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;color:#cbd5e1;margin:12px 0}
+.hint{background:rgba(6,182,212,.08);border-left:4px solid var(--pr2);padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;color:#cbd5e1;margin:14px 0 0}
 .hint b{color:var(--pr2)}
 .hide{display:none}
 .drop{display:block;border:2px dashed var(--bd);border-radius:12px;padding:18px;text-align:center;color:var(--mu);cursor:pointer;font-size:14px}
@@ -62,23 +60,18 @@ input::placeholder,textarea::placeholder{color:#475569}
 .chip b{cursor:pointer;color:var(--mu);font-weight:400}
 .mini{padding:10px 14px;border:1px solid var(--bd);border-radius:10px;background:transparent;color:var(--tx);font:inherit;font-size:14px;cursor:pointer}
 .mini:hover{border-color:var(--pr)}
-.bar{position:fixed;left:0;right:0;bottom:0;background:#0b1121ee;backdrop-filter:blur(8px);border-top:1px solid var(--bd);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));z-index:20}
-.bar div{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.bar small{color:var(--mu);display:block;font-size:12px}
-.bar strong{font-family:'Outfit',sans-serif;font-size:22px;color:var(--pr2)}
-.note{font-size:12px;color:var(--mu);text-align:right}
 button.send{width:100%;padding:18px;border:0;border-radius:14px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:17px;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,.3)}
 button.send:hover{filter:brightness(1.1)}
 button.alt{margin-top:12px;width:100%;padding:14px;border:1px solid var(--bd);border-radius:12px;background:transparent;color:var(--mu);font:500 16px 'Inter',sans-serif;cursor:pointer}
 button.alt:hover{color:var(--tx);border-color:var(--mu)}
 .err{color:#f43f5e;font-size:14px;margin:12px 0 0;min-height:20px;text-align:center;font-weight:500}
-footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
+footer{text-align:center;color:var(--mu);font-size:13px;padding:12px 16px 24px}
 </style>
 </head>
 <body>
 <header>
 <h1>MartInfo</h1>
-<p>Conheça alguns projetos já desenvolvidos e monte o seu software como quem escolhe itens de um cardápio, vendo o valor estimado na hora.</p>
+<p>Conheça alguns projetos já desenvolvidos e monte o pedido do seu software de forma simples, enviando tudo direto para o WhatsApp.</p>
 </header>
 
 <main>
@@ -97,7 +90,7 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
 <!-- DIVISOR DA SEÇÃO DE PEDIDO -->
 <div class="pedido-header" id="faca-seu-pedido">
 <h2>Faça o seu pedido</h2>
-<p>Preencha as etapas abaixo para calcular a estimativa e enviar pelo WhatsApp</p>
+<p>Escolha o modelo desejado e conte os detalhes do seu projeto</p>
 </div>
 
 <section>
@@ -118,6 +111,11 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
 <h2><span>3</span>Tipo e uso</h2>
 <label class="f">O que você precisa? *</label>
 <div class="opts" id="tipo"></div>
+<div id="tipoOutroBox" class="hide">
+<label class="f" for="tipoOutro">Qual outro tipo de projeto você tem em mente?</label>
+<input type="text" id="tipoOutro" placeholder="Ex.: Site institucional, sistema de estoque, app próprio…">
+</div>
+
 <label class="f">Será para uso… *</label>
 <div class="opts">
 <label><input type="radio" name="uso" value="Próprio"> Próprio</label>
@@ -158,26 +156,26 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
 
 <section>
 <h2><span>5</span>O que o seu sistema precisa ter?</h2>
-<p class="sub">Marque o que você quer. Cada item mostra o valor e soma na estimativa lá embaixo. Em dúvida? Marque o que parecer útil, depois a gente ajusta junto.</p>
+<p class="sub">Marque o que você gostaria de incluir no projeto. Em dúvida? Marque o que parecer útil, depois alinhamos juntos.</p>
 <div id="feats"></div>
 <label class="f" for="extra">Precisa de algo que não está na lista?</label>
-<textarea id="extra" placeholder="Descreva aqui. Itens extras são orçados à parte."></textarea>
+<textarea id="extra" placeholder="Descreva aqui qualquer função específica que você precisa."></textarea>
 </section>
 
 <section>
 <h2><span>6</span>Integrações externas</h2>
 <p class="sub">O sistema precisa conversar com algum serviço?</p>
 <div class="opts" id="integ"></div>
-<input type="text" id="integOutro" placeholder="Outras integrações (orçadas à parte)" style="margin-top:10px">
+<input type="text" id="integOutro" placeholder="Outras integrações" style="margin-top:10px">
 </section>
 
 <section>
 <h2><span>7</span>Prazo e orçamento</h2>
 <label class="f">Prazo desejado</label>
 <div class="opts" id="prazo"></div>
-<div class="hint"><b>Por que o prazo muda o valor?</b> Quanto mais curto, mais horas dedicadas só ao seu projeto, deixando outros de lado. Prazos longos permitem planejar melhor e custam menos.</div>
-<label class="f" for="orc">Orçamento que você tem em mente</label>
+<label class="f" for="orc">Orçamento que você tem em mente (opcional)</label>
 <select id="orc"><option value="">Selecione…</option><option>Até R$ 500</option><option>R$ 500 a R$ 1.500</option><option>R$ 1.500 a R$ 3.000</option><option>R$ 3.000 a R$ 7.000</option><option>Acima de R$ 7.000</option><option>Ainda não sei</option></select>
+<div class="hint"><b>Sobre os valores:</b> O orçamento final varia de acordo com o que for pedido (funcionalidades e complexidade) e o prazo desejado para entrega. Enviando o pedido, analisamos tudo e retornamos com uma proposta exata.</div>
 </section>
 
 <section>
@@ -199,11 +197,6 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:0 16px 24px}
 <p class="err" id="err" role="alert"></p>
 </main>
 <footer>© MartInfo · Seu pedido será aberto no WhatsApp para você conferir e enviar.</footer>
-
-<div class="bar"><div>
-<span><small>Estimativa inicial</small><strong id="tot">R$ 0</strong></span>
-<span class="note" id="det">Escolha o tipo de projeto</span>
-</div></div>
 
 <script>
 /* ====== SEUS PROJETOS ====== */
@@ -228,20 +221,27 @@ const PROJETOS = [
   }
 ];
 
-/* ====== TABELA DE PREÇOS (edite aqui) ====== */
-const TIPOS=[["Site",400],["Software (computador)",1500],["App (celular)",1800],["Webapp (sistema online)",1200],["Não sei, preciso de ajuda",500]];
-const FEATS=[
-["Acesso e usuários",[["Login e cadastro de usuários",250],["Níveis de acesso (admin/funcionário)",200],["Recuperação de senha por e-mail",80]]],
-["Gestão",[["Cadastro de clientes",150],["Cadastro de produtos/serviços",150],["Controle de estoque",250],["Agenda / agendamentos",300],["Relatórios e gráficos",300],["Painel administrativo",350],["Exportar para PDF/Excel",100]]],
-["Vendas",[["Catálogo online",250],["Carrinho e pedidos",450],["Pagamento Pix/cartão",400],["Cálculo de frete/entrega",200],["Emissão de recibos",120]]],
-["Comunicação",[["Botão de WhatsApp",50],["Formulário de contato",60],["Notificações e lembretes",200],["Chat interno",400],["Envio automático de e-mails",120]]],
-["Conteúdo",[["Blog / notícias",200],["Galeria de fotos e vídeos",100],["Vários idiomas",200],["Envio de arquivos pelos usuários",180]]],
-["Qualidade (como o sistema deve ser)",[["Funcionar sem internet (offline)",500],["Segurança reforçada",300],["Backup automático",150],["Suportar muitos usuários ao mesmo tempo",400],["Aparecer no Google (SEO)",150],["Modo escuro",80],["Design premium com animações",300],["Acessibilidade (leitores de tela, contraste)",150]]]
+/* ====== OPÇÕES DO FORMULÁRIO ====== */
+const TIPOS=[
+  "Vitrine Digital",
+  "Agenda Online",
+  "Cadastro de Clientes",
+  "Outro tipo de projeto sob medida"
 ];
-const INTEG=[["WhatsApp automático",200],["Pagamentos (Pix/Cartão)",300],["E-mail",80],["Google (Agenda/Planilhas/Login)",150],["Redes sociais",100],["Mapas / Entregas",150],["Nota fiscal",500],["Outro sistema que já uso",300]];
-const PRAZOS=[["Urgente (até 1 semana)",1.5],["Até 2 semanas",1.25],["Até 1 mês",1.1],["1 a 3 meses",1],["Sem pressa",0.95]];
-const HOST=[["Já tenho domínio e hospedagem",0],["Só tenho domínio",100],["Só tenho hospedagem",60],["Não tenho nada, preciso de ajuda",150]];
-const MANUT=[["Quero manutenção mensal",80],["Só quando precisar",0],["Não sei",0]];
+
+const FEATS=[
+  ["Acesso e usuários",["Login e cadastro de usuários","Níveis de acesso (admin/funcionário)","Recuperação de senha por e-mail"]],
+  ["Gestão",["Cadastro de clientes","Cadastro de produtos/serviços","Controle de estoque","Agenda / agendamentos","Relatórios e gráficos","Painel administrativo","Exportar para PDF/Excel"]],
+  ["Vendas",["Catálogo online","Carrinho e pedidos","Pagamento Pix/cartão","Cálculo de frete/entrega","Emissão de recibos"]],
+  ["Comunicação",["Botão de WhatsApp","Formulário de contato","Notificações e lembretes","Chat interno","Envio automático de e-mails"]],
+  ["Conteúdo",["Blog / notícias","Galeria de fotos e vídeos","Vários idiomas","Envio de arquivos pelos usuários"]],
+  ["Qualidade (como o sistema deve ser)",["Funcionar sem internet (offline)","Segurança reforçada","Backup automático","Suportar muitos usuários ao mesmo tempo","Aparecer no Google (SEO)","Modo escuro","Design premium com animações","Acessibilidade (leitores de tela, contraste)"]]
+];
+
+const INTEG=["WhatsApp automático","Pagamentos (Pix/Cartão)","E-mail","Google (Agenda/Planilhas/Login)","Redes sociais","Mapas / Entregas","Nota fiscal","Outro sistema que já uso"];
+const PRAZOS=["Urgente (até 1 semana)","Até 2 semanas","Até 1 mês","1 a 3 meses","Sem pressa"];
+const HOST=["Já tenho domínio e hospedagem","Só tenho domínio","Só tenho hospedagem","Não tenho nada, preciso de ajuda"];
+const MANUT=["Quero manutenção mensal","Só quando precisar","Não sei"];
 /* ============================================ */
 const WA="5591985603676";
 const $=id=>document.getElementById(id);
@@ -258,44 +258,24 @@ $('listaProjetos').innerHTML = PROJETOS.map(p => `
   </a>
 `).join('');
 
-const R=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
 const radio=n=>{const e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:""};
 const checks=(sel)=>[...document.querySelectorAll(sel+' input:checked')];
-const price=el=>+el.dataset.p||0;
-function chips(id,list,type,name,showP,fmt){
-  $(id).innerHTML=list.map(([n,p])=>`<label><input type="${type}" ${name?`name="${name}"`:''} value="${n}" data-p="${p}"> ${n}${showP&&p?` <small>${fmt(p)}</small>`:''}</label>`).join('');
-}
-chips('tipo',TIPOS,'radio','tipo',false);
-$('feats').innerHTML=FEATS.map(([c,l],i)=>`<h3>${c}</h3><div class="opts" id="f${i}"></div>`).join('');
-FEATS.forEach(([c,l],i)=>chips('f'+i,l,'checkbox','',true,p=>'+'+R(p)));
-chips('integ',INTEG,'checkbox','',true,p=>'+'+R(p));
-chips('prazo',PRAZOS,'radio','prazo',false);
-$('prazo').querySelectorAll('input').forEach((e,i)=>{e.dataset.m=PRAZOS[i][1];const s=document.createElement('small');s.textContent=PRAZOS[i][1]>1?'+'+Math.round((PRAZOS[i][1]-1)*100)+'%':PRAZOS[i][1]<1?'−5%':'preço normal';e.parentNode.append(' ',s)});
-chips('host',HOST,'radio','host',true,p=>'+'+R(p));
-chips('manut',MANUT,'radio','manut',true,p=>'+'+R(p)+'/mês');
 
-function calc(){
-  const t=document.querySelector('input[name="tipo"]:checked');
-  const base=t?price(t):0;
-  const fe=checks('#feats'),ig=checks('#integ');
-  const sum=fe.concat(ig).reduce((a,e)=>a+price(e),0);
-  const h=document.querySelector('input[name="host"]:checked');
-  const hp=h?price(h):0;
-  const pz=document.querySelector('input[name="prazo"]:checked');
-  const m=pz?+pz.dataset.m:1;
-  const sub=base+sum+hp;
-  const total=Math.round(sub*m/10)*10;
-  const mn=document.querySelector('input[name="manut"]:checked');
-  const mensal=mn?price(mn):0;
-  return {base,sum,hp,m,sub,total,mensal,fe,ig,t,pz};
+function chips(id,list,type,name){
+  $(id).innerHTML=list.map(n=>`<label><input type="${type}" ${name?`name="${name}"`:''} value="${n}"> ${n}</label>`).join('');
 }
-function atualiza(){
-  const c=calc();
-  $('tot').textContent=R(c.total);
-  const n=c.fe.length+c.ig.length;
-  $('det').innerHTML=(c.t?n+' item(ns) marcado(s)':'Escolha o tipo de projeto')+(c.m!==1?`<br>Prazo: ×${String(c.m).replace('.',',')}`:'')+(c.mensal?`<br>+ ${R(c.mensal)}/mês de manutenção`:'');
-}
-document.addEventListener('change',atualiza);
+
+chips('tipo',TIPOS,'radio','tipo');
+$('feats').innerHTML=FEATS.map(([c,l],i)=>`<h3>${c}</h3><div class="opts" id="f${i}"></div>`).join('');
+FEATS.forEach(([c,l],i)=>chips('f'+i,l,'checkbox',''));
+chips('integ',INTEG,'checkbox','');
+chips('prazo',PRAZOS,'radio','prazo');
+chips('host',HOST,'radio','host');
+chips('manut',MANUT,'radio','manut');
+
+document.querySelectorAll('input[name="tipo"]').forEach(r=>r.addEventListener('change',()=>{
+  $('tipoOutroBox').classList.toggle('hide',radio('tipo')!=='Outro tipo de projeto sob medida');
+}));
 
 document.querySelectorAll('input[name="uso"]').forEach(r=>r.addEventListener('change',()=>{
   const v=radio('uso');
@@ -354,30 +334,39 @@ cv.addEventListener('click',e=>{
 
 /* ===== Mensagem ===== */
 function montar(){
-  const L=[],c=calc();
+  const L=[];
   const add=(t,v)=>{if(v&&String(v).trim())L.push("*"+t+":* "+String(v).trim())};
   L.push("*📩 NOVO PEDIDO – MartInfo*","");
   add("Nome",$('nome').value);add("Contato",$('contato').value);
   add("Problema a resolver",$('problema').value);
-  add("Tipo",radio('tipo'));add("Uso",radio('uso'));
+  
+  const tp=radio('tipo');
+  const tpDet=(tp==='Outro tipo de projeto sob medida'&&$('tipoOutro').value.trim())?tp+" ("+$('tipoOutro').value.trim()+")":tp;
+  add("Tipo de projeto",tpDet);
+  
+  add("Uso",radio('uso'));
   const u=radio('uso');
   if(u==='Negócio')add("Detalhes do negócio",[$('negocio').value,$('negocioOutro').value].filter(Boolean).join(" – "));
   else if(u==='Grupo/Comunidade')add("Detalhes do grupo",$('grupoEsp').value);
   else if(u.startsWith('Trabalho'))add("Detalhes do trabalho",$('trabEsp').value);
+  
   add("Público-alvo",$('publico').value);
   add("Cores (descrição)",$('cores').value);
   if(sel.length)add("Cores (códigos da logo/imagem)",sel.join(", ")+" — enviarei a imagem em seguida");
-  if(c.fe.length){L.push("","*Funcionalidades escolhidas:*");c.fe.forEach(e=>L.push("• "+e.value+" ("+R(price(e))+")"))}
-  add("Funcionalidades extras (a orçar)",$('extra').value);
-  const ig=c.ig.map(e=>e.value+" ("+R(price(e))+")");
-  if($('integOutro').value.trim())ig.push($('integOutro').value.trim()+" (a orçar)");
+  
+  const fe=checks('#feats');
+  if(fe.length){L.push("","*Funcionalidades desejadas:*");fe.forEach(e=>L.push("• "+e.value))}
+  add("Funcionalidades extras",$('extra').value);
+  
+  const ig=checks('#integ').map(e=>e.value);
+  if($('integOutro').value.trim())ig.push($('integOutro').value.trim());
   if(ig.length)add("Integrações",ig.join(", "));
-  add("Prazo",c.pz?c.pz.value+" (×"+c.m+")":"");
-  add("Orçamento do cliente",$('orc').value);
+  
+  add("Prazo desejado",radio('prazo'));
+  add("Orçamento em mente",$('orc').value);
   add("Referências/Concorrentes",$('refs').value);
   add("Hospedagem/Domínio",radio('host'));
   add("Manutenção",radio('manut'));
-  L.push("","*💰 Estimativa do site:* "+R(c.total)+(c.mensal?" + "+R(c.mensal)+"/mês":""),"_(valor estimado, sujeito a confirmação)_");
   return L.join("\n");
 }
 function validar(){
@@ -402,7 +391,6 @@ $('copiar').onclick=async()=>{
   catch(e){$('err').style.color="#f43f5e";$('err').textContent="Não foi possível copiar automaticamente."}
   setTimeout(()=>{$('err').style.color="";$('err').textContent=""},3000);
 };
-atualiza();
 </script>
 </body>
 </html>
